@@ -1,0 +1,51 @@
+# Sistema e arquivos específicos do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambiente virtual
+env/
+.venv/
+ENV/
+.ENV/
+env.bak/
+venv.bak/
+*.env
+
+# Configurações e arquivos de log do Django
+db.sqlite3
+db.sqlite3-journal
+*.log
+
+# Migrations do Django
+*/migrations/*
+!*/migrations/__init__.py
+
+# Arquivos estáticos e de mídia
+staticfiles/
+media/
+
+# Configurações do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos e pastas do editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos de configuração do sistema de versionamento
+*.swp
+*~
+.project
+.pydevproject
+
+# Arquivos gerados pelo gerenciamento de dependências
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Arquivos do JetBrains (PyCharm, IntelliJ)
+*.iml
+.idea/
