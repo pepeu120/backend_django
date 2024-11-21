@@ -5,6 +5,8 @@ from drones.serializers import DroneSerializer, DroneCategorySerializer, PilotSe
 from drones.filters import CompetitionFilter
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework import permissions
+from drones import custom_permissions
 
 class ApiRoot(generics.GenericAPIView):
     name = "api-root"
@@ -32,7 +34,9 @@ class DroneList(generics.ListCreateAPIView):
     serializer_class = DroneSerializer
     name = "drone-list"
     filterset_fields = (
+        "name",
         "drone_category",
+        "manufacturing_date",
         "has_it_competed",
     )
     search_fields = ("^name",)
@@ -40,12 +44,23 @@ class DroneList(generics.ListCreateAPIView):
         "name",
         "manufacturing_date",
     )
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        custom_permissions.IsCurrentUserOwnerOrReadOnly,
+    )
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = "drone-detail"
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        custom_permissions.IsCurrentUserOwnerOrReadOnly,
+    )
 
 
 class PilotList(generics.ListCreateAPIView):
