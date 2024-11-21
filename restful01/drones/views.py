@@ -9,6 +9,7 @@ from rest_framework import permissions
 from drones import custom_permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.throttling import ScopedRateThrottle
 
 class ApiRoot(generics.GenericAPIView):
     name = "api-root"
@@ -32,10 +33,12 @@ class DroneCategoryViewSet(viewsets.ModelViewSet):
 
 
 class DroneList(generics.ListCreateAPIView):
+    throttle_scope = "drones"
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = "drone-list"
-    filterset_fields = (
+    filter_fields = (
         "name",
         "drone_category",
         "manufacturing_date",
@@ -56,6 +59,8 @@ class DroneList(generics.ListCreateAPIView):
 
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
+    throttle_scope = "drones"
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = "drone-detail"
@@ -64,12 +69,13 @@ class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
         custom_permissions.IsCurrentUserOwnerOrReadOnly,
     )
 
-
 class PilotList(generics.ListCreateAPIView):
+    throttle_scope = "pilots"
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
     name = "pilot-list"
-    filterset_fields = (
+    filter_fields = (
         "name",
         "gender",
         "races_count",
@@ -77,15 +83,17 @@ class PilotList(generics.ListCreateAPIView):
     search_fields = ("^name",)
     ordering_fields = ("name", "races_count")
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class PilotDetail(generics.RetrieveUpdateDestroyAPIView):
+    throttle_scope = "pilots"
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
     name = "pilot-detail"
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class CompetitionList(generics.ListCreateAPIView):
