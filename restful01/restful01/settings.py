@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drones.apps.DronesConfig',
     'django_filters',
     'rest_framework.authtoken',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -148,5 +149,19 @@ REST_FRAMEWORK = {
         "user": "10/hour",
         "drones": "20/hour",
         "pilots": "15/hour",
+    },
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "RESTIC Back-end API",
+    "DESCRIPTION": "Your project description",
+    "VERSION": "1.0.0",
+    "SERVE INCLUDE SCHEMA": False,
+    "AUTHENTICATION_WHITELIST": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "SWAGGER_UI_SETTINGS": {
+        "persistAuthorization": True,
     },
 }

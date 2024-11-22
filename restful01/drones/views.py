@@ -1,15 +1,12 @@
-from rest_framework import generics
-from rest_framework import viewsets
+from rest_framework import generics, viewsets, permissions
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.throttling import ScopedRateThrottle
 from drones.models import Drone, DroneCategory, Pilot, Competition
 from drones.serializers import DroneSerializer, DroneCategorySerializer, PilotSerializer, PilotCompetitionSerializer
 from drones.filters import CompetitionFilter
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
-from rest_framework import permissions
 from drones import custom_permissions
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.throttling import ScopedRateThrottle
 
 class ApiRoot(generics.GenericAPIView):
     name = "api-root"
