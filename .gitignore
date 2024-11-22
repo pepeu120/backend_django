@@ -16,6 +16,7 @@ venv.bak/
 db.sqlite3
 db.sqlite3-journal
 *.log
+*.sqlite
 
 # Migrations do Django
 */migrations/*
@@ -50,3 +51,9 @@ poetry.lock
 # Arquivos do JetBrains (PyCharm, IntelliJ)
 *.iml
 .idea/
+
+# Arquivos de cobertura
+.coverage
+htmlcov/
+cov.xml
+coverage.xml
