@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Categoria, Autor, Livro
-#from .views import CategoriaViewSet, AutorViewSet, LivroViewSet
+from .models import Autor, Categoria, Colecao, Livro
 
 class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
     livros = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='Livro Instance')
@@ -25,3 +24,9 @@ class LivroSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Livro
         fields = ('url', 'pk', 'titulo', 'autor', 'categoria', 'publicado_em')
+
+
+class ColecaoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Colecao
+        fields = '__all__'
