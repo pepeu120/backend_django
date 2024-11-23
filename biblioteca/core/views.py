@@ -1,8 +1,6 @@
 from rest_framework import viewsets, generics, views
-from .models import Autor, Categoria, Livro, Colecao, Colecionador
-from .serializers import AutorSerializer, CategoriaSerializer, ColecaoSerializer, LivroSerializer, \
-    ColecionadorSerializer
-
+from .models import Autor, Categoria, Livro
+from .serializers import AutorSerializer, CategoriaSerializer, LivroSerializer
 
 class CategoriaViewSet(viewsets.ModelViewSet):
     queryset = Categoria.objects.all()
@@ -15,13 +13,3 @@ class AutorViewSet(viewsets.ModelViewSet):
 class LivroViewSet(viewsets.ModelViewSet):
     queryset = Livro.objects.all()
     serializer_class = LivroSerializer
-
-
-class ColecionadorViewSet(viewsets.ModelViewSet):
-    queryset = Colecionador.objects.all()
-    serializer_class = ColecionadorSerializer
-
-
-class ColecaoViewSet(viewsets.ModelViewSet):
-    queryset = Colecao.objects.all()
-    serializer_class = ColecaoSerializer
