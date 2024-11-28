@@ -1,6 +1,13 @@
 from rest_framework import viewsets, generics, permissions
 from .models import Autor, Categoria, Colecao, Livro
-from .serializers import AutorSerializer, CategoriaSerializer, ColecaoSerializer, LivroSerializer
+from .custom_permissions import IsOwnerOrReadOnly
+from .serializers import (
+    AutorSerializer,
+    CategoriaSerializer,
+    ColecaoSerializer,
+    LivroSerializer,
+)
+
 
 class CategoriaViewSet(viewsets.ModelViewSet):
     queryset = Categoria.objects.all()
@@ -17,13 +24,10 @@ class LivroViewSet(viewsets.ModelViewSet):
     serializer_class = LivroSerializer
 
 
-class ColecaoListCreate(generics.ListCreateAPIView):
+class ColecaoViewSet(viewsets.ModelViewSet):
     queryset = Colecao.objects.all()
     serializer_class = ColecaoSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsOwnerOrReadOnly]
 
-
-class ColecaoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Colecao.objects.all()
-    serializer_class = ColecaoSerializer
-    permission_classes = [permissions.IsAuthenticated, IsColecionador]
+    def perform_create(self, serializer):
+        serializer.save(colecionador=self.request.user)
